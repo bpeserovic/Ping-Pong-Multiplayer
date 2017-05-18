@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.etfos.bpeserovic.Menu2"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/text"
+        android:textSize="@dimen/title_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+    <Button
+        android:id="@+id/hostGame"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/host_game"
+        android:textSize="@dimen/button_text"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/title"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+    <Button
+        android:id="@+id/joinGame"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/join_game"
+        android:textSize="@dimen/button_text"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/hostGame"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+</RelativeLayout>
