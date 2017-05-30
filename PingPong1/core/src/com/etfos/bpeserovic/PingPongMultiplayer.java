@@ -263,7 +263,7 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 	}
 
 	///// kontrole
-	//// treba dodati kontrole pomoću žiroskopa i toga
+	////TODO treba dodati kontrole pomoću žiroskopa i toga
 
 	public Vector2 lastTouch = new Vector2();
 
@@ -299,6 +299,7 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		Vector2 newTouch = new Vector2(screenX, screenY);
 		Vector2 delta = newTouch.cpy().sub(lastTouch);
 		lastTouch = newTouch;
+
 
 		if ((delta.x < 0) && (palica1.playerx >= 0)) {
 			//player1.translateX(-10f);

@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="24" />
 
@@ -30,6 +32,8 @@
         <activity android:name=".Server"/>
         <activity android:name=".Client"/>
         <activity android:name=".AndroidLauncher"/>
+        <!--<activity android:name=".ServerBluetooth"/>
+        <activity android:name=".ClientBluetooth"/>-->
         <!--<service android:name=".ServerService"/>
         <service android:name=".ClientService"/>-->
     </application>

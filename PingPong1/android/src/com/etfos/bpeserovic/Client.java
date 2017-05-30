@@ -47,6 +47,7 @@ public class Client extends Activity {
         setContentView(R.layout.client);
 
         serverIPText = (EditText) findViewById(R.id.etServerIP);
+
         //EditText et = (EditText) findViewById(R.id.EditText01);
         //EditText et2 = (EditText) findViewById(R.id.port);
         connectPhones = (Button) findViewById(R.id.connectPhones);
@@ -75,6 +76,7 @@ public class Client extends Activity {
 
         @Override
         public void onClick(View view) {
+            serverIP = serverIPText.getText().toString();
             try {
                 Thread cThread = new Thread(new ClientThread());
                 cThread.start(); //pokreće thread nakon unosa adrese
@@ -95,8 +97,20 @@ public class Client extends Activity {
         }
     };
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
     ///////
     //////////////ovo bi trebalo biti u ClientService skripti sada
+    //TODO ipak neće biti sa servisima
     //////
 
 
@@ -109,21 +123,25 @@ public class Client extends Activity {
                 //ovo gledaj
                 InetAddress serverAddr = InetAddress.getByName(serverIP);
                 socket = new Socket(serverAddr, SERVERPORT);
+                Log.d("BORIS socket", "socket kreiran, treba spojiti");
                 connected = true;
-                while (connected){
+                if (connected){
                     try {
                         PrintWriter out = new PrintWriter(new BufferedWriter((new OutputStreamWriter(socket.getOutputStream()))), true);
                         out.println("Connected");
+                        Log.d("BORIS Connected", "Spojeno");
 
-                        //pokretanje igre s client strane
+                        //TODO pokretanje igre s client strane
 
 
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    Log.d("BORIS debug prije intnt", "prije intenta");
                     Intent i = new Intent();
-                    i.setClass(Client.this, AndroidLauncher.class);
-
+                    i.setClass(getBaseContext(), AndroidLauncher.class);  ///TODO promijenio (.this, androidlauncher.class)
+                    Log.d("BORIS debug nakon intnt", "prošao intent");
+                    startActivity(i);
                 }
 
             } catch (UnknownHostException e1) {

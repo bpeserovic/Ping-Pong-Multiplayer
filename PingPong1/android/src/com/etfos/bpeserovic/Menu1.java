@@ -8,10 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.UUID;
+
 public class Menu1 extends Activity implements View.OnClickListener {
 
     Button bNewGame;
     Button bScores;
+
+    //UUID kod za Bluetooth, isti je za server i client
+    public static String MY_UUID = "7c482781-528a-4384-84a3-7b5006a66f16";
 
     private static Context Main;
 

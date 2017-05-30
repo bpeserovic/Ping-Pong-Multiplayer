@@ -29,9 +29,13 @@ public class Server extends Activity {
 
     public static final int SERVERPORT = 6000;
 
+    public boolean isServer;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        isServer = true;
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.server);
@@ -45,7 +49,8 @@ public class Server extends Activity {
         this.serverThread.start();
 
         //dobavljanje ip adrese
-        WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE);
+        //WifiManager wm = (WifiManager) getSystemService(WIFI_SERVICE); // zastarjelo
+        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String serverIP = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
         textIP.setText(serverIP);
@@ -57,6 +62,7 @@ public class Server extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
+        isServer = false;
         try {
             serverSocket.close();
         } catch (IOException e) {
@@ -139,9 +145,10 @@ public class Server extends Activity {
             //text.setText(text.getText().toString() + "Client Says: " + msg + "\n");
             connected = true;
 
-            while (connected){
+            if (connected){
                 Intent i = new Intent();
                 i.setClass(Server.this, AndroidLauncher.class);
+                startActivity(i);
             }
         }
     }
