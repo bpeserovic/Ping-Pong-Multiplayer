@@ -23,6 +23,9 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 		//mPhoneProperties = new PhoneProperties();
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.useGyroscope = false;
+		config.useAccelerometer = true;
+		config.useCompass = false;
 		initialize(new PingPongMultiplayer(), config);
 
 

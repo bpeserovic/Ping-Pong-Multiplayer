@@ -1,8 +1,10 @@
 package com.etfos.bpeserovic;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,7 +18,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.TextView;
 
-public class Server extends Activity {
+public class Server extends Activity implements PingPongMultiplayer.CommunicationInterface{
 
     private ServerSocket serverSocket;
 
@@ -24,21 +26,19 @@ public class Server extends Activity {
 
     Thread serverThread = null;
 
-    //private TextView text;
     private TextView textIP;
 
-    public static final int SERVERPORT = 6000;
+    public static final int SERVERPORT = 8080;
 
     public boolean isServer;
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        isServer = true;
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.server);
+        isServer = true;
 
         //text = (TextView) findViewById(R.id.text2);
         textIP=(TextView)findViewById(R.id.textIP);
@@ -101,6 +101,8 @@ public class Server extends Activity {
 
         private BufferedReader input;
 
+        private BufferedWriter output;
+
         public CommunicationThread(Socket clientSocket) {
 
             this.clientSocket = clientSocket;
@@ -108,6 +110,7 @@ public class Server extends Activity {
             try {
 
                 this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
+                this.output = new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream()));
 
             } catch (IOException e) {
                 e.printStackTrace();

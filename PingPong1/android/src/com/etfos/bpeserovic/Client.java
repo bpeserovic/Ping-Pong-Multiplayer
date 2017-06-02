@@ -18,23 +18,20 @@ import android.widget.Button;
 
 //import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
-public class Client extends Activity {
+public class Client extends Activity implements PingPongMultiplayer.CommunicationInterface{
 
 
     private Socket socket;
 
-    private static final int SERVERPORT = 6000;
-    //private static final String SERVER_IP = "192.168.1.7";
-
-    //ovo gledaj, ovako isto za string
-    //private String serverIP = "";
-    //private String port;
+    private static final int SERVERPORT = 8080;
 
     private Button connectPhones;
 
     private boolean connected = false;
 
     private EditText serverIPText;
+
+    public boolean isClient;
 
     //moje varijable
 
@@ -45,6 +42,7 @@ public class Client extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client);
+        isClient = true;
 
         serverIPText = (EditText) findViewById(R.id.etServerIP);
 
@@ -100,6 +98,7 @@ public class Client extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
+        isClient = false;
         try {
             socket.close();
         } catch (IOException e) {

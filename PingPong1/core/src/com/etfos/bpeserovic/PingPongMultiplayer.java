@@ -2,6 +2,7 @@ package com.etfos.bpeserovic;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 /*
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -43,7 +45,9 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 
 	BitmapFont brojFont;
 
-
+	//akcelometar
+	public float accelX;
+	public String accelXtext;
 
 	//klasa palica
 	public class Palica {
@@ -92,6 +96,15 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		fontGenerator.dispose();
 	}
 
+	//interface za varijable u igri i komunikaciju između servera i clienta
+	//TODO interface u izradi...
+
+	public interface CommunicationInterface{
+
+	}
+
+
+
 
 	@Override
 	public void create () {
@@ -134,6 +147,8 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		palica2.playery = height - (palica2.player.getHeight()) - 200;
 
 		Gdx.input.setInputProcessor(this);
+
+
 	}
 
 	@Override
@@ -193,6 +208,37 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 
 		batch.end();	//kraj crtanja
 
+
+		//TODO kontrole akcelometra
+		////kontrole
+
+		//akcelometar
+		boolean accelometerAvail = Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer);
+		if(accelometerAvail)
+		{
+			accelX = Gdx.input.getAccelerometerX();
+
+		}
+
+		//akcelometar
+
+		if((accelX > 1) && (palica1.playerx >= 0))
+		{
+			palica1.playerx -= 10;
+		}
+		else
+		{
+			palica1.playerx -= 0;
+		}
+
+		if((accelX < -1) && (palica1.playerx + palica1.player.getWidth() <= width))
+		{
+			palica1.playerx += 10;
+		}
+		else
+		{
+			palica1.playerx += 0;
+		}
 
 		//micanje loptice
 		loptica.xPosition += loptica.xVector;
@@ -262,11 +308,10 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		}
 	}
 
-	///// kontrole
-	////TODO treba dodati kontrole pomoću žiroskopa i toga
+	//stare kontrole na dodir
+	//TODO trebalo bi izbrisat u zadnjoj verziji
 
 	public Vector2 lastTouch = new Vector2();
-
 
 	@Override
 	public boolean keyDown(int keycode) {

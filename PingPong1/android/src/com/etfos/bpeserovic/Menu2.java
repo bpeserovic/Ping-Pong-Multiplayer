@@ -35,7 +35,7 @@ public class Menu2 extends Activity implements View.OnClickListener{
             case R.id.hostGame:
                 i.setClass(Menu2.this, Server.class);
 
-                ////// PRIVREMENI KOD
+                //////TODO PRIVREMENI KOD
                 /////
                 //i.setClass(Menu2.this, AndroidLauncher.class);
                 /////
