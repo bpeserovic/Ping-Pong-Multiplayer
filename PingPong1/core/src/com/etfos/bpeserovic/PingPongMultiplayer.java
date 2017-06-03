@@ -1,6 +1,7 @@
 package com.etfos.bpeserovic;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -96,14 +97,14 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		fontGenerator.dispose();
 	}
 
-	//interface za varijable u igri i komunikaciju između servera i clienta
+
 	//TODO interface u izradi...
 
-	public interface CommunicationInterface{
+	CommunicationInterface commInterface;
 
+	public  PingPongMultiplayer(CommunicationInterface commInterface){
+		this.commInterface = commInterface;
 	}
-
-
 
 
 	@Override
@@ -148,7 +149,9 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 
 		Gdx.input.setInputProcessor(this);
 
+		//TODO poziva metodu iz interfacea
 
+		commInterface.getUserStatus();
 	}
 
 	@Override
@@ -221,24 +224,41 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		}
 
 		//akcelometar
+		//TODO interface provjera je li server treba popraviti
 
-		if((accelX > 1) && (palica1.playerx >= 0))
+		//kontrole za p1
+
+		if( == true)
 		{
-			palica1.playerx -= 10;
-		}
-		else
-		{
-			palica1.playerx -= 0;
+			if ((accelX > 1) && (palica1.playerx >= 0)) {
+				palica1.playerx -= 10;
+			} else {
+				palica1.playerx -= 0;
+			}
+
+			if ((accelX < -1) && (palica1.playerx + palica1.player.getWidth() <= width)) {
+				palica1.playerx += 10;
+			} else {
+				palica1.playerx += 0;
+			}
 		}
 
-		if((accelX < -1) && (palica1.playerx + palica1.player.getWidth() <= width))
+		//kontrole za p2
+		if())
 		{
-			palica1.playerx += 10;
+			if ((accelX > 1) && (palica2.playerx >= 0)) {
+				palica2.playerx -= 10;
+			} else {
+				palica2.playerx -= 0;
+			}
+
+			if ((accelX < -1) && (palica2.playerx + palica2.player.getWidth() <= width)) {
+				palica2.playerx += 10;
+			} else {
+				palica2.playerx += 0;
+			}
 		}
-		else
-		{
-			palica1.playerx += 0;
-		}
+
 
 		//micanje loptice
 		loptica.xPosition += loptica.xVector;
@@ -345,23 +365,36 @@ public class PingPongMultiplayer extends ApplicationAdapter implements InputProc
 		Vector2 delta = newTouch.cpy().sub(lastTouch);
 		lastTouch = newTouch;
 
+		if(commInterface.getUserStatus(true)) {
+			if ((delta.x < 0) && (palica1.playerx >= 0)) {
+				//player1.translateX(-10f);
+				palica1.playerx -= 15;
+			} else {
+				palica1.playerx -= 0;
+			}
 
-		if ((delta.x < 0) && (palica1.playerx >= 0)) {
-			//player1.translateX(-10f);
-			palica1.playerx -= 15;
-		}
-		else
-		{
-			palica1.playerx -= 0;
+			if ((delta.x > 0) && (palica1.playerx + palica1.player.getWidth() <= width)) {
+				//player1.translateX(10f);
+				palica1.playerx += 15;
+			} else {
+				palica1.playerx += 0;
+			}
 		}
 
-		if ((delta.x > 0) && (palica1.playerx + palica1.player.getWidth() <= width )) {
-			//player1.translateX(10f);
-			palica1.playerx += 15;
-		}
-		else
-		{
-			palica1.playerx += 0;
+		if(commInterface.getUserStatus(false)) {
+			if ((delta.x < 0) && (palica2.playerx >= 0)) {
+				//player2.translateX(-10f);
+				palica2.playerx -= 15;
+			} else {
+				palica2.playerx -= 0;
+			}
+
+			if ((delta.x > 0) && (palica1.playerx + palica2.player.getWidth() <= width)) {
+				//player2.translateX(10f);
+				palica2.playerx += 15;
+			} else {
+				palica2.playerx += 0;
+			}
 		}
 		return false;
 	}

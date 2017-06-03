@@ -16,17 +16,19 @@ public class AndroidLauncher extends AndroidApplication {
 	}
 	public static PhoneProperties mPhoneProperties;*/
 
+	CommunicationInterfaceAndroid commInterfaceAndroid;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		//instance = this;
 		super.onCreate(savedInstanceState);
 		//mPhoneProperties = new PhoneProperties();
+		commInterfaceAndroid = new CommunicationInterfaceAndroid(this);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useGyroscope = false;
 		config.useAccelerometer = true;
 		config.useCompass = false;
-		initialize(new PingPongMultiplayer(), config);
+		initialize(new PingPongMultiplayer(commInterfaceAndroid), config);
 
 
 		//mPhoneProperties.setX(getResources().getDisplayMetrics().widthPixels);

@@ -18,7 +18,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.widget.TextView;
 
-public class Server extends Activity implements PingPongMultiplayer.CommunicationInterface{
+public class Server extends Activity implements CommunicationInterface{
 
     private ServerSocket serverSocket;
 
@@ -30,7 +30,7 @@ public class Server extends Activity implements PingPongMultiplayer.Communicatio
 
     public static final int SERVERPORT = 8080;
 
-    public boolean isServer;
+    //public boolean isServer;
 
 
 
@@ -38,7 +38,9 @@ public class Server extends Activity implements PingPongMultiplayer.Communicatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.server);
-        isServer = true;
+        //isServer = true;
+        //getUserStatus(true);  //je li korisnik server?
+        getUserStatus();
 
         //text = (TextView) findViewById(R.id.text2);
         textIP=(TextView)findViewById(R.id.textIP);
@@ -62,12 +64,22 @@ public class Server extends Activity implements PingPongMultiplayer.Communicatio
     @Override
     protected void onStop() {
         super.onStop();
-        isServer = false;
+        //isServer = false;
+        //getUserStatus(false); //je li korisnik server?
+        getUserStatus();
         try {
             serverSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //TODO interface stvari
+    //vraća true ako je server
+
+    @Override
+    public void getUserStatus() {
+        boolean isServer = true;
     }
 
     class ServerThread implements Runnable {

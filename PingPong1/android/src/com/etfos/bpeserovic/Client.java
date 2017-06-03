@@ -16,9 +16,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 
+import com.etfos.*;
+
 //import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
-public class Client extends Activity implements PingPongMultiplayer.CommunicationInterface{
+public class Client extends Activity implements CommunicationInterface{
 
 
     private Socket socket;
@@ -31,7 +33,7 @@ public class Client extends Activity implements PingPongMultiplayer.Communicatio
 
     private EditText serverIPText;
 
-    public boolean isClient;
+    //public boolean isClient;
 
     //moje varijable
 
@@ -42,7 +44,10 @@ public class Client extends Activity implements PingPongMultiplayer.Communicatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client);
-        isClient = true;
+        //isClient = true;
+        //TODO treba popraviti userstatus
+        //getUserStatus(false); //je li korisnik server?
+        getUserStatus();
 
         serverIPText = (EditText) findViewById(R.id.etServerIP);
 
@@ -98,13 +103,24 @@ public class Client extends Activity implements PingPongMultiplayer.Communicatio
     @Override
     protected void onStop() {
         super.onStop();
-        isClient = false;
+        //isClient = false;
+        //TODO treba popraviti userstatus
+        //getUserStatus(false); //je li korinik server?
+        getUserStatus();
         try {
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
 
         }
+    }
+
+    //TODO interface stvari
+    //vraća true ako je server
+
+    @Override
+    public void getUserStatus() {
+        boolean isServer = false;
     }
 
     ///////
